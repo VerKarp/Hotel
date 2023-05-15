@@ -1,0 +1,81 @@
+﻿@model HotelWebsite.ViewModels.BookingViewModel
+
+@{
+    ViewData["Title"] = "Booking";
+}
+
+<div class="booking-panel-container">
+    <div class="booking-panel-title">
+        <h2>@ViewData["Title"] Room</h2>
+    </div>
+</div>
+
+<div class="booking-container">
+    <div class="booking-room-detail-container">
+        <div class="booking-room-detail">
+            <div class="booking-room-detail-name">
+                <p>@Model.RoomType.Name Room @Model.Room.Number Number</p>
+            </div>
+
+            <p class="booking-room-detail-dates">@Model.Booking.DaysOfStay nights 
+                @DateOnly.FromDateTime(Model.Booking.CheckIn) 
+                - @DateOnly.FromDateTime(Model.Booking.CheckOut)</p>
+            <p>@Model.Booking.Guests Guests</p>
+
+            <div class="booking-room-detail-price">
+                <p>Total fee: @Math.Round(Model.Booking.TotalFee)</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="booking-form-container">
+        <div class="booking-form-guest-info">
+            <p>Enter guest info</p>
+        </div>
+
+        @using (Html.BeginForm("Booked", "Booking", FormMethod.Post))
+        {
+            @Html.HiddenFor(b => b.Booking.RoomId)
+            @Html.HiddenFor(b => b.Booking.CheckIn)
+            @Html.HiddenFor(b => b.Booking.CheckOut)
+            @Html.HiddenFor(b => b.Booking.TotalFee)
+            @Html.HiddenFor(b => b.Booking.Guests)
+            @Html.HiddenFor(b => b.Booking.DaysOfStay)
+
+            @Html.HiddenFor(r => r.Room.Id)
+            @Html.HiddenFor(t => t.RoomType.Id)
+
+            <div class="inlined-elements">
+                <div class="elem-group inlined">
+                    <label>SNP</label>
+                    <input asp-for="Guest.Name" type="text"
+                    pattern="^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)"
+                    title="Valid examples: John Smith / John Doe-Smith / John Doe Smith / John D'Largy"
+                    required/>
+                    <span asp-validation-for="Guest.Name"></span>
+                </div>
+                <div class="elem-group inlined">
+                    <label>E-mail</label>
+                    <input asp-for="Guest.Email" type="email" 
+                    pattern="[a-z0-9._%+-]+@@[a-z0-9.-]+\.[a-z]{2,4}$"
+                    title="Valid example: valid@@gmail.com"
+                    required/>
+                    <span asp-validation-for="Guest.Email"></span>
+                </div>
+                <div class="elem-group inlined">
+                    <label>Phone</label>
+                    <input asp-for="Guest.Phone" type="tel"
+                    pattern="[0-9]{3} [0-9]{3} [0-9]{4}"
+                    title="Valid example: 888 888 8888"
+                    required/>
+                    <span asp-validation-for="Guest.Phone"></span>
+                </div>
+            </div>
+
+            <div class="book-button-container">
+                <input class="submit-button" type="submit" value="BOOK" 
+                    onclick="return confirm('Are you sure?')"/>
+            </div>
+        }
+    </div>
+</div>

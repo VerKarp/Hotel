@@ -1,0 +1,105 @@
+﻿@model HotelWebsite.ViewModels.BookingViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="booking-panel-container -details">
+    <div class="booking-panel-title -details">
+        <h2>@Model.RoomType.Name Room</h2>
+    </div>
+
+    <div class="main-booking-panel">
+        @await Html.PartialAsync("BookingFormPartial", Model.Booking)
+    </div>
+</div>
+
+<div class="details-container">
+    <div class="details-room">
+        <div class="carousel-container">
+            <div class="carousel">
+                <button class="carousel-left-btn" onclick="plusDivs(-1)">&#10094;</button>
+                @foreach (var roomImg in Model.Room.Images!)
+                {
+                    <img class="slides" src="@roomImg.ImageUrl">
+                }
+                <button class="carousel-right-btn" onclick="plusDivs(+1)">&#10095;</button>
+            </div>
+        </div>
+
+        <div class="details-room-info">
+            <div class="price" style="font-size: 1.9rem">
+                <p>@Math.Round(Model.RoomType.BasePrice)</p>
+            </div>
+            <p>@Model.Room.Description</p>
+        </div>
+    </div>
+
+    <div class="details-feature">
+        <div class="equipment-container">
+            <div class="equipment-title">
+                In the room
+            </div>
+            <ul class="equipment-list">
+                <li class="equipment-list-item">TV</li>
+                <li class="equipment-list-item">satellite TV</li>
+                <li class="equipment-list-item">WI-FI</li>
+                <li class="equipment-list-item">telephone</li>
+                <li class="equipment-list-item">mini fridge</li>
+                <li class="equipment-list-item">table lamp</li>
+                <li class="equipment-list-item">glasses</li>
+                <li class="equipment-list-item">bed</li>
+                <li class="equipment-list-item">chair</li>
+                <li class="equipment-list-item">wardrobe or clothes rack</li>
+                <li class="equipment-list-item">kettle on request</li>
+                <li class="equipment-list-item">desk</li>
+                <li class="equipment-list-item">mirror</li>
+                <li class="equipment-list-item">bedside table</li>
+            </ul>
+        </div>
+
+        <div class="equipment-container">
+            <div class="equipment-title">
+                In the bathroom
+            </div>
+            <ul class="equipment-list">
+                <li class="equipment-list-item">bath or shower</li>
+                <li class="equipment-list-item">hygiene products</li>
+                <li class="equipment-list-item">hairdryer</li>
+                <li class="equipment-list-item">bath accessories</li>
+                <li class="equipment-list-item">mirror</li>
+            </ul>
+        </div>
+
+        <div class="equipment-container">
+            <div class="equipment-title">
+                Others
+            </div>
+            <ul class="equipment-list">
+                <li class="equipment-list-item">soundproof walls and windows</li>
+                <li class="equipment-list-item">room service</li>
+                <li class="equipment-list-item">adjustable heating</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+    showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+    var i;
+    var x = document.getElementsByClassName("slides");
+    if (n > x.length) { slideIndex = 1 }
+    if (n < 1) { slideIndex = x.length };
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+    }
+    x[slideIndex - 1].style.display = "block";
+}    
+</script>

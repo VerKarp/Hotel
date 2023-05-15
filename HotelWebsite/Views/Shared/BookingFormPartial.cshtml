@@ -1,0 +1,15 @@
+﻿@model HotelWebsite.Models.Booking
+
+<form class="booking-panel" asp-controller="Booking" asp-action="Index" class="booking-panel">
+    <div class="elem-group inlined">
+        <label>Check-in</label>
+        <input id="checkIn" asp-for="CheckIn" type="date"/>
+    </div>
+    <div class="elem-group inlined">
+        <label>Check-out</label>
+        <input id="checkOut" asp-for="CheckOut" type="date"/>
+    </div>
+    <div class="elem-group inlined">
+        <input class="submit-button" type="submit" value="Find rooms"/>
+    </div>
+</form>

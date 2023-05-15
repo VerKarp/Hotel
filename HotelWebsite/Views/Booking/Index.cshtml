@@ -1,0 +1,65 @@
+﻿@model HotelWebsite.Models.Booking
+
+@{
+    ViewData["Title"] = "Booking";
+    var roomTypes = ViewData["RoomTypes"] as List<HotelWebsite.Models.RoomType>;
+    var rooms = ViewData["Rooms"] as List<HotelWebsite.Models.Room>;
+}
+
+<div class="booking-panel-container">
+    <div class="booking-panel-title">
+        <h2>@ViewData["Title"]</h2>
+    </div>
+
+    <div class="main-booking-panel">
+        @await Html.PartialAsync("BookingFormPartial", Model)
+    </div>
+</div>
+
+<div class="rooms-container">
+    <div class="rooms">
+        <div class="room-types">
+        @foreach (var room in rooms!)
+                {
+                    <div class="room-card">
+                        <div class="card-image">
+                            <a asp-controller="Rooms" asp-action="Details" asp-route-id="@room.Id"
+                                target="_blank">
+
+                                <div class="image" style="background-image: 
+                                                          url('@room.Images!.First().ImageUrl')">
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="card-info">
+                            <p class="card-info-room-type">
+                                @roomTypes!.First(t => t.Id == room.RoomTypeId).Name</p>
+
+                            <div class="price">
+                                <p>@Math.Round((roomTypes!.First(t => t.Id == room.RoomTypeId).BasePrice 
+                                * ((int)(Model.CheckOut - Model.CheckIn).TotalDays)), 0) 
+                                for @Model.DaysOfStay days</p>
+                            </div>
+                            
+                            <p class="description">@room.Description</p>
+
+                            @Html.ActionLink("Book", "Booking", 
+                            new {
+                                CheckIn = Model.CheckIn,
+                                CheckOut = Model.CheckOut,
+                                DaysOfStay = Model.DaysOfStay,
+                                RoomId = room.Id
+                            },
+                            new {
+                                @class = "book-btn"
+                            })
+
+                        </div>
+                    </div>
+                }
+        </div>
+    </div>
+</div>
+
+<script src="~/js/site.js"></script>

@@ -1,0 +1,107 @@
+﻿@model HotelWebsite.Models.Booking
+
+@{
+    ViewData["Title"] = "Contacts";
+}
+
+<script src="https://maps.googleapis.com/maps/api/js?"></script>
+
+<div class="booking-panel-container">
+    <div class="booking-panel-title">
+        <h2>@ViewData["Title"]</h2>
+    </div>
+
+    <div class="main-booking-panel">
+        @await Html.PartialAsync("BookingFormPartial", Model)
+    </div>
+</div>
+
+<div class="contacts-container">
+    <div class="contacts">
+        <div class="contacts-col">
+            <div class="contacts-icon -geo"></div>
+            <div class="contacts-text">
+                <p>Hotel «Lay low». Dweersstraat 28, 8000 Brugge, Belgium</p>
+            </div>
+        </div>
+
+        <div class="contacts-col">
+            <div class="contacts-icon -tel"></div>
+            <div class="contacts-text">
+                <p>Booking Department (around the clock):</p>
+                <a>+32-2-555-12-12</a>
+                <a>+32-2-555-11-11</a>
+            </div>
+        </div>
+
+        <div class="contacts-col">
+            <div class="contacts-icon -email"></div>
+            <div class="contacts-text">
+                <p>For all questions, you can contact us by mail:</p>
+                <a>polkin_out@outlook.com</a>
+            </div>
+        </div>
+
+        <div class="contacts-col">
+            <div class="contacts-icon -person"></div>
+            <div class="contacts-text">
+                <p>Maria Peeters</p>
+                <p>Head of Reception and Accommodation Service:</p>
+                <a>+32-2-555-12-12</a>
+                <a>polkin_out@outlook.com</a>
+            </div>
+        </div>
+
+        <div class="contacts-col">
+            <div class="contacts-icon -person"></div>
+            <div class="contacts-text">
+                <p>Maria Blaint</p>
+                <p>Corporate Client Manager (group booking):</p>
+                <a>+32-2-555-12-12</a>
+                <a>polkin_out@outlook.com</a>
+            </div>
+        </div>
+
+        <div class="contacts-col -full">
+            <div class="contacts-icon -car"></div>
+            <div class="contacts-text">
+                <p>How to get to us</p>
+                <p>Go left to right from the entrance to there. Turn around. 
+                    Get in the car, look at the sky, head towards the west. 
+                    Then drive straight straight straight, to the left, then back and a little to the right. 
+                    Get out of the car, look at your feet. 
+                    Get in the car and drive left, right, then forward a couple of kilometers.
+                    Then drive straight straight straight, to the left, then back and a little to the right. 
+                    Get out of the car, look at your feet. 
+                    Get in the car, look at the sky, head towards the west.
+                    Get out of the car, run a kilometer ahead and 4 kilometers to the left.
+                    Congratulations! You've come</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="map"></div>
+
+<script type="text/javascript">
+    function displayGoogleMap() {
+        var myAddress = new google.maps.LatLng(51.2092, 3.2248);
+
+        var mapOptions = {
+            center: myAddress,
+            zoom: 15,
+            minZoom: 30,
+            maxZoom: 100,
+        };
+
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+        var marker = new google.maps.Marker({
+            position: myAddress,
+        });
+
+        marker.setMap(map);
+    }
+
+    window.onload = displayGoogleMap;
+</script>

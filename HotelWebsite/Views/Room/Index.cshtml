@@ -1,0 +1,51 @@
+﻿@model HotelWebsite.Models.Booking
+
+@{
+    ViewData["Title"] = "Room";
+    var roomTypes = ViewData["RoomTypes"] as List<HotelWebsite.Models.RoomType>;
+}
+
+<div class="booking-panel-container">
+    <div class="booking-panel-title">
+        <h2>@ViewData["Title"]</h2>
+    </div>
+
+    <div class="main-booking-panel">
+        @await Html.PartialAsync("BookingFormPartial", Model)
+    </div>
+</div>
+
+<div class="rooms-container">
+    <div class="rooms">
+        @foreach (var type in roomTypes!)
+        {
+            <div class="room-type-title">
+                <h1>@type.Name</h1>
+            </div>
+            
+            <div class="room-types">
+                @foreach (var room in type.Rooms!)
+                {
+                    <div class="room-card">
+                        <div class="card-image">
+                            <a asp-action="Details" asp-route-id="@room.Id">
+                                <div class="image" style="background-image: url('@room.Images!.First().ImageUrl')">
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="card-info">
+                            <div class="price">
+                                <p>@Math.Round(type.BasePrice)</p>
+                            </div>
+                            
+                            <p class="description">@room.Description</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+<script src="~/js/site.js"></script>
